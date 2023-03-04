@@ -22,11 +22,16 @@ func NewNumgoArray(shape []int) *NumgoArray {
 
 // NewNumgoArrayFromSlice creates a new NumgoArray from a slice of float64 values and the given shape
 func NewNumgoArrayFromSlice(data []float64, shape []int) *NumgoArray {
-	if len(data) != shape[0]*shape[1] {
+	size := 1
+	for _, dim := range shape {
+		size *= dim
+	}
+	if len(data) != size {
 		panic("invalid shape")
 	}
 	return &NumgoArray{Data: data, Shape: shape}
 }
+
 
 // Set sets the value of an element at the given indices
 func (a *NumgoArray) Set(value float64, indices ...int) {
